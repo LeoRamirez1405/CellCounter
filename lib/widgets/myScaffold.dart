@@ -33,7 +33,7 @@ class MyScaffold extends StatelessWidget {
             style: const TextStyle(
               color: text_Color_white, // Usa el color que desees para el texto
               fontSize: 24,
-              fontWeight: FontWeight.bold, // Hace que el texto sea negrita
+              fontWeight: FontWeight.w400, // Hace que el texto sea negrita
               //fontFamily: 'MyCustomFont',
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:cell_counter/colors.dart';
 import 'package:cell_counter/widgets/genericButton.dart';
+import 'package:cell_counter/widgets/genericButtonOnPress.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -26,7 +27,7 @@ class _Drawer extends StatelessWidget {
         children: [
           DrawerHeader(
             decoration: const BoxDecoration(color: text_Color_white),
-            child: Image.asset("assets/cellStudy-04.png"),
+            child: Image.asset("assets/logo.png"),
           ),
           const ListTile(
             tileColor: text_Color_white,
@@ -42,7 +43,7 @@ class _Drawer extends StatelessWidget {
             title: GenericButton(
                 name: "Contador",
                 iconData: Icons.calculate,
-                routeToNav: "counter",
+                routeToNav: "counterForm",
                 inv: false),
           ),
           const ListTile(
@@ -53,13 +54,18 @@ class _Drawer extends StatelessWidget {
                 routeToNav: "theory",
                 inv: false),
           ),
-          const ListTile(
+          ListTile(
             tileColor: text_Color_white,
-            title: GenericButton(
-                name: "Mis Archivos",
-                iconData: Icons.file_open,
-                routeToNav: "myFiles",
-                inv: false),
+            title: GenericButtonOnPress(
+              name: "Mis Archivos",
+              iconData: Icons.file_open_sharp,
+              //routeToNav: "myFiles",
+              onPress: () {
+                Navigator.pushNamed(context, "myFiles",
+                    arguments: {'samplesList': null});
+              },
+              inv: false,
+            ),
           ),
           const ListTile(
             tileColor: text_Color_white,

@@ -22,7 +22,7 @@ class NeubauerCam extends StatelessWidget {
       ¿Qué características tiene la  cámara de Neubauer?""",
                   body: Text(
                     camExplain,
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.justify,
                   )),
               Image.asset("assets/neubauer.png"),
             ],

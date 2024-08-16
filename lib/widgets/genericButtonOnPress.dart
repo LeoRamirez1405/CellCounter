@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:cell_counter/colors.dart'; // Asegúrate de que este archivo existe y contiene las definiciones de color mencionadas
 
-class GenericButton extends StatelessWidget {
+class GenericButtonOnPress extends StatelessWidget {
   final String name;
   final IconData iconData;
-  final String routeToNav;
+  final Function onPress;
   final bool inv; // Cambiado a lowercase 'b'
 
   // Constructor para pasar los parámetros necesarios
-  const GenericButton({
+  const GenericButtonOnPress({
     required this.name,
     required this.iconData,
-    required this.routeToNav,
+    required this.onPress,
     required this.inv,
     Key? key,
   }) : super(key: key);
@@ -25,10 +25,7 @@ class GenericButton extends StatelessWidget {
 
     return MaterialButton(
       onPressed: () {
-        if (routeToNav != "") {
-          Navigator.pushReplacementNamed(context, routeToNav);
-        }
-        // setState(() {});
+        onPress();
       },
       color: buttonBackgroundColor,
       shape: RoundedRectangleBorder(

@@ -16,14 +16,12 @@ class CellCounter extends StatelessWidget {
               header:
                   "¿Por qué es importante determinar el número de células en una preparación o cultivo?",
               body: Text(
-                """1. Para monitorear el crecimiento y la proliferación celular. 
- Esto es esencial en la investigación en biología celular, el desarrollo de medicamentos y el diagnóstico de enfermedades. 
+                """1. Para monitorear el crecimiento y la proliferación celular. Esto es esencial en la investigación en biología celular, el desarrollo de medicamentos y el diagnóstico de enfermedades. 
 2. Para garantizar resultados precisos y reproducibles.
 3. Para calibrar experimentos y análisis; medir la actividad enzimática, la expresión génica y otras mediciones biológicas.
 4. Para garantizar la calidad y la efectividad de medicamentos 
-5. Para la detección y seguimiento de diversas enfermedades,
-incluyendo cáncer infecciones virales y trastornos""",
-                textAlign: TextAlign.center,
+5. Para la detección y seguimiento de diversas enfermedades, incluyendo cáncer infecciones virales y trastornos""",
+                textAlign: TextAlign.justify,
               )),
           const TextHelper(
             header:
@@ -43,26 +41,18 @@ incluyendo cáncer infecciones virales y trastornos""",
                 "¿Cómo se determina la concentración celular y cómo se cuentan las células?",
             body: Text(
               """
-La suspensión celular se aplica a un volumen definido y se 
-cuenta para poder calcular la concentración celular, la que 
-puede determinarse mediante la tinción con el tripán azul. 
-Las células se pueden contar directamente en un microscopio con la ayuda de la cámara de Neubauer.
+La suspensión celular se aplica a un volumen definido y se cuenta para poder calcular la concentración celular, la que puede determinarse mediante la tinción con el tripán azul. Las células se pueden contar directamente en un microscopio con la ayuda de la cámara de Neubauer.
         """,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.justify,
             ),
           ),
           const TextHelper(
             header: "¿Qué es el tripán azul?",
             body: Text(
               """
-El tripán azul es un colorante que deja las células muertas
-con un color azul al ser observadas bajo un microscopio, 
-mientras que las células viables aparecen sin teñir, blancas o 
-con un halo azul. Las células viables tienen membranas celulares 
-intactas, estas son selectivas a los compuestos que dejan pasar y, por ende,
-no permiten el ingreso de tinciones en la célula siendo no absorbido el azul de tripán por estas
+El tripán azul es un colorante que deja las células muertas con un color azul al ser observadas bajo un microscopio, mientras que las células viables aparecen sin teñir, blancas o con un halo azul. Las células viables tienen membranas celulares intactas, estas son selectivas a los compuestos que dejan pasar y, por ende, no permiten el ingreso de tinciones en la célula siendo no absorbido el azul de tripán por estas
         """,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.justify,
             ),
           ),
           Image.asset("assets/conteo1.png"),
@@ -80,7 +70,7 @@ Por encima de 2.5 millones de células/mL, es preferible diluir la muestra para 
 TIP: Escribe la dilución empleada en la muestra original. 
 
         """,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.justify,
             ),
           ),
         ]),

@@ -8,20 +8,20 @@ class Calculations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const TheoryScaffold(
+    return TheoryScaffold(
       title: "Cálculos",
       body: SingleChildScrollView(
         child: Column(children: [
           TextHelper(
             header: "¿Cuáles son las fórmulas para realizar los cálculos?",
-            body: Text("Aqui va una foto\n-----------------------------------"),
+            body: Image.asset('assets/formulas_1.png'),
           ),
-          TextHelper(
+          const TextHelper(
             header: "¿Viabilidad o Vitalidad?",
             body: Text(
                 "Viabilidad es un termino muy de  laboratorio, la palabra correcta seria  vitalidad porque el investigador solo sabe  en el momento que observa al microscopio  cuántas células estan vivas, ellas no se  mantienen en ese estado en el tiempo"),
           ),
-          TextHelper(
+          const TextHelper(
             header:
                 "¿Qué representa 10^4 en la  expresión para determinar la  concentración celular?",
             body: Text(
@@ -31,10 +31,9 @@ class Calculations extends StatelessWidget {
             header:
                 "¿Cómo sembrar las células a una  concentración deseada en un  volumen determinado?",
             body: Column(children: [
-              Text(
-                  """Para ello se debe emplear la ley de la volumetria. La expresión resultante permitirá determinar qué volumen del homogenado celular se debe tomar para  que las células estén a determina concentración en el volumen especificado.
-                  \nAqui va una foto\n-----------------------------------"""),
-              //Image.asset("volumen")
+              const Text(
+                  """Para ello se debe emplear la ley de la volumetria. La expresión resultante permitirá determinar qué volumen del homogenado celular se debe tomar para  que las células estén a determina concentración en el volumen especificado."""),
+              Image.asset('assets/formulas_2.png'),
             ]),
           ),
         ]),
