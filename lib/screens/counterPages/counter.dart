@@ -7,8 +7,10 @@ import 'package:cell_counter/widgets/buttonCounter.dart';
 // import 'package:cell_counter/widgets/genericButton.dart';
 import 'package:cell_counter/widgets/genericButtonOnPress.dart';
 import 'package:cell_counter/widgets/myScaffold.dart';
+import 'package:flutter/cupertino.dart';
 // import 'package:cell_counter/widgets/sidebar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class Counter extends StatefulWidget {
   Counter({super.key});
@@ -65,60 +67,63 @@ class _CounterState extends State<Counter> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              // Encabezados fijos
               Container(
-                alignment: Alignment.topCenter,
-                // width: double.infinity,
-                // height: widget.size.height * 0.45,
+                child: Row(
+                  children: const [
+                    Expanded(
+                        child: Center(
+                            child: Text('No.',
+                                style: TextStyle(color: Colors.black)))),
+                    Expanded(
+                        child: Center(
+                            child: Text('Vivas',
+                                style: TextStyle(color: green_counter_color)))),
+                    Expanded(
+                        child: Center(
+                            child: Text('Muertas',
+                                style: TextStyle(color: red_counter_color)))),
+                    Expanded(
+                        child: Center(
+                            child: Text('Total',
+                                style: TextStyle(color: Colors.black)))),
+                  ],
+                ),
+              ),
+              // DataTable con scroll
+              Container(
+                height: 200,
                 child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      DataTable(
-                        columns: const [
-                          DataColumn(label: Text('No.')),
-                          DataColumn(
-                              label: Text(
-                            'Vivas',
-                            style: TextStyle(color: green_counter_color),
-                          )),
-                          DataColumn(
-                              label: Text(
-                            'Muertas',
-                            style: TextStyle(color: red_counter_color),
-                          )),
-                          DataColumn(label: Text('Total')),
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children:
+                        List.generate(widget.samples_list.length, (index) {
+                      final sample = widget.samples_list[index];
+                      return Row(
+                        children: [
+                          Expanded(
+                              child:
+                                  Center(child: Text((index + 1).toString()))),
+                          Expanded(
+                              child: Center(
+                                  child: Text(sample.vivas.toString(),
+                                      style: TextStyle(
+                                          color: green_counter_color)))),
+                          Expanded(
+                              child: Center(
+                                  child: Text(sample.muertas.toString(),
+                                      style: TextStyle(
+                                          color: red_counter_color)))),
+                          Expanded(
+                              child:
+                                  Center(child: Text(sample.total.toString()))),
                         ],
-                        rows: List<DataRow>.generate(
-                          widget.samples_list.length,
-                          (index) {
-                            final sample = widget.samples_list[index];
-                            return DataRow(
-                              cells: [
-                                DataCell(Center(
-                                    child: Text((index + 1).toString()))),
-                                DataCell(Center(
-                                    child: Text(sample.vivas.toString(),
-                                        style: TextStyle(
-                                            color: green_counter_color)))),
-                                DataCell(Center(
-                                    child: Text(sample.muertas.toString(),
-                                        style: TextStyle(
-                                            color: red_counter_color)))),
-                                DataCell(Center(
-                                    child: Text(sample.total.toString()))),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                    ],
+                      );
+                    }),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 200,
-              ),
+              const SizedBox(height: 80),
               Stack(
                 children: isSwitched
                     ? [
@@ -144,67 +149,77 @@ class _CounterState extends State<Counter> {
                         ),
                       ],
               ),
-              SizedBox(
-                height: 80,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GenericButtonOnPress(
-                      name: "Reiniciar",
-                      iconData: Icons.rotate_left_sharp,
-                      onPress: () {
-                        setState(() {
-                          widget.vivas = 0;
-                          widget.muertas = 0;
-                        });
-                      },
-                      inv: true),
-                  SizedBox(width: 20),
-                  Switch(
-                    value: isSwitched,
-                    onChanged: (value) {
-                      setState(() {
-                        isSwitched = value;
-                      });
-                    },
-                    activeColor: red_counter_color,
-                    inactiveThumbColor: green_counter_color,
-                  ),
-                  SizedBox(width: 20),
-                  Stack(
-                    children: widget.Samples != widget.elem
-                        ? [
-                            GenericButtonOnPress(
-                                name: "Siguiente",
-                                iconData: Icons.navigate_next_outlined,
-                                onPress: () {
-                                  setState(() {
-                                    update();
-                                    widget.elem = widget.elem + 1;
-                                  });
-                                },
-                                inv: true),
-                          ]
-                        : [
-                            GenericButtonOnPress(
-                              name: "Finalizar",
-                              iconData: Icons.done,
-                              inv: true,
-                              onPress: () {
-                                update();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CounterResult(
-                                        samplesList: widget.samples_list),
+              const SizedBox(height: 40),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Container(
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: GenericButtonOnPress(
+                          name: "Reiniciar",
+                          iconData: Icons.rotate_left_sharp,
+                          onPress: () {
+                            setState(() {
+                              widget.vivas = 0;
+                              widget.muertas = 0;
+                            });
+                          },
+                          inv: true,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Switch(
+                        value: isSwitched,
+                        onChanged: (value) {
+                          setState(() {
+                            isSwitched = value;
+                          });
+                        },
+                        activeColor: red_counter_color,
+                        inactiveThumbColor: green_counter_color,
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: Stack(
+                          children: widget.Samples != widget.elem
+                              ? [
+                                  GenericButtonOnPress(
+                                    name: "Siguiente",
+                                    iconData: Icons.navigate_next_outlined,
+                                    onPress: () {
+                                      setState(() {
+                                        update();
+                                        widget.elem = widget.elem + 1;
+                                      });
+                                    },
+                                    inv: true,
                                   ),
-                                );
-                              },
-                            ),
-                          ],
+                                ]
+                              : [
+                                  GenericButtonOnPress(
+                                    name: "Finalizar",
+                                    iconData: Icons.done,
+                                    inv: true,
+                                    onPress: () {
+                                      update();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => CounterResult(
+                                              samplesList: widget.samples_list),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ],
           ),
@@ -214,6 +229,7 @@ class _CounterState extends State<Counter> {
   }
 
   void update() {
+    isSwitched = false;
     Sample samp = Sample(
       date: widget.Date.toString(),
       name: "${widget.Name}_${widget.elem}",

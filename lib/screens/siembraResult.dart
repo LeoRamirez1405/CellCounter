@@ -30,7 +30,7 @@ class SiembraResult extends StatelessWidget {
               child: DataTable(
                 columns: const [
                   DataColumn(label: Text('Nombre')),
-                  DataColumn(label: Text('Volumen a tomar')),
+                  DataColumn(label: Text('Volumen a tomar (mL)')),
                   // DataColumn(label: Text('Concentración Homogenado')),
                 ],
                 rows: List<DataRow>.generate(
@@ -42,8 +42,9 @@ class SiembraResult extends StatelessWidget {
                     return DataRow(
                       cells: [
                         DataCell(Center(child: Text(sample.name.toString()))),
-                        DataCell(
-                            Center(child: Text(sample.volAtomar.toString()))),
+                        DataCell(Center(
+                            child: Text(_roundToTwoDecimals(sample.volAtomar)
+                                .toString()))),
                         // DataCell(Center(
                         //     child: Text(sample.concentracionHomogenado.toString()))),
                       ],
@@ -71,4 +72,8 @@ class SiembraResult extends StatelessWidget {
       ),
     );
   }
+}
+
+double _roundToTwoDecimals(double value) {
+  return double.parse(value.toStringAsFixed(2));
 }

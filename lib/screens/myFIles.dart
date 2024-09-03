@@ -1,10 +1,13 @@
 import 'package:cell_counter/colors.dart';
+import 'package:cell_counter/widgets/genericButtonOnPress.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cell_counter/widgets/myScaffold.dart';
 import 'package:cell_counter/widgets/sidebar.dart';
 import 'package:cell_counter/widgets/genericButton.dart';
 import 'package:cell_counter/model.dart';
 import 'package:cell_counter/database_helper.dart';
+import 'package:flutter/widgets.dart';
 
 class MyFiles extends StatefulWidget {
   final List<Sample>? samplesList;
@@ -43,6 +46,13 @@ class _MyFilesState extends State<MyFiles> {
     });
   }
 
+  void _deleteAllSamples() async {
+    await DatabaseHelper.instance.deleteAllSamples();
+    setState(() {
+      _samples = DatabaseHelper.instance.fetchSamples();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MyScaffold(
@@ -74,47 +84,114 @@ class _MyFilesState extends State<MyFiles> {
               ],
             ));
           } else {
-            return SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                columns: const [
-                  DataColumn(label: Text('ID')),
-                  DataColumn(label: Text('Fecha')),
-                  DataColumn(label: Text('Nombre')),
-                  DataColumn(label: Text('Volumen')),
-                  DataColumn(label: Text('Dilución')),
-                  DataColumn(label: Text('Cuadrantes')),
-                  DataColumn(label: Text('Vivas')),
-                  DataColumn(label: Text('Muertas')),
-                  DataColumn(label: Text('Acciones')),
-                ],
-                rows: snapshot.data!.map((sample) {
-                  return DataRow(
-                    cells: [
-                      DataCell(Text(sample.id.toString())),
-                      DataCell(Text(sample.date)),
-                      DataCell(Text(sample.name)),
-                      DataCell(Text(sample.volume.toString())),
-                      DataCell(Text(sample.dilution.toString())),
-                      DataCell(Text(sample.quadrants.toString())),
-                      DataCell(Text(sample.vivas.toString())),
-                      DataCell(Text(sample.muertas.toString())),
-                      DataCell(
-                        IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () {
-                            _deleteSample(sample.id!);
-                          },
-                        ),
+            return Column(
+              children: [
+                Container(
+                  height: 500,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: DataTable(
+                        columns: const [
+                          DataColumn(label: Text('ID')),
+                          DataColumn(label: Text('Fecha')),
+                          DataColumn(label: Text('Nombre')),
+                          DataColumn(label: Text('Vivas')),
+                          DataColumn(label: Text('Muertas')),
+                          DataColumn(label: Text('Total')),
+                          DataColumn(label: Text('Volumen')),
+                          DataColumn(label: Text('Dilución')),
+                          DataColumn(label: Text('Cuadrantes')),
+                          DataColumn(label: Text('Concentración de células')),
+                          DataColumn(label: Text('Vol A Tomar')),
+                          DataColumn(label: Text('Viabilidad')),
+                          DataColumn(
+                              label:
+                                  Text('Total de células por concentración')),
+                          DataColumn(label: Text('Acciones')),
+                        ],
+                        rows: snapshot.data!.map((sample) {
+                          return DataRow(
+                            cells: [
+                              DataCell(Text(sample.id.toString())),
+                              DataCell(Text(sample.date)),
+                              DataCell(Text(sample.name)),
+                              DataCell(Text(sample.vivas.toString())),
+                              DataCell(Text(sample.muertas.toString())),
+                              DataCell(Text(sample.total.toString())),
+                              DataCell(Text(sample.volume.toString())),
+                              DataCell(Text(sample.dilution.toString())),
+                              DataCell(Text(sample.quadrants.toString())),
+                              DataCell(Text(_toScientificNotation(
+                                  sample.cellTotalesConcentradas))),
+                              DataCell(Text(sample.volAtomar.toString())),
+                              DataCell(Text(sample.viabilidad.toString())),
+                              DataCell(Text(_toScientificNotation(
+                                  sample.totalCellHomogenado))),
+                              DataCell(
+                                IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () {
+                                    _deleteSample(sample.id!);
+                                  },
+                                ),
+                              ),
+                            ],
+                          );
+                        }).toList(),
                       ),
-                    ],
-                  );
-                }).toList(),
-              ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 50),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                  child: GenericButtonOnPress(
+                    inv: true,
+                    name: "Eliminar todos",
+                    iconData: Icons.delete,
+                    onPress: () async {
+                      bool? confirm = await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Confirmar eliminación'),
+                            content: Text(
+                                '¿Estás seguro de que deseas eliminar todos los archivos?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(false);
+                                },
+                                child: Text('Cancelar'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(true);
+                                },
+                                child: Text('Eliminar'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+
+                      if (confirm == true) {
+                        _deleteAllSamples();
+                      }
+                    },
+                  ),
+                ),
+              ],
             );
           }
         },
       ),
     );
   }
+}
+
+String _toScientificNotation(double value) {
+  return value.toStringAsExponential(2);
 }

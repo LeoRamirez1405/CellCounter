@@ -13,36 +13,46 @@ class TheoryScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const MyDrawer(),
-      appBar: AppBar(
-        backgroundColor:
-            primary_en, // Establece el color de fondo del AppBar en negro
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.arrow_back_ios), // Ícono del menú
-            color: Colors.white, // Establece el color del ícono a blanco
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, 'theory');
-            }, // Abre el drawer cuando se presiona el ícono
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacementNamed(context, 'theory');
+        return true;
+      },
+      child: Scaffold(
+        drawer: const MyDrawer(),
+        appBar: AppBar(
+          backgroundColor:
+              primary_en, // Establece el color de fondo del AppBar en negro
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.arrow_back_ios), // Ícono del menú
+              color: Colors.white, // Establece el color del ícono a blanco
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, 'theory');
+              }, // Abre el drawer cuando se presiona el ícono
+            ),
           ),
-        ),
 
-        title: Center(
-          child: Text(
-            title,
-            style: const TextStyle(
-              color: text_Color_white, // Usa el color que desees para el texto
-              fontSize: 24,
-              fontWeight: FontWeight.bold, // Hace que el texto sea negrita
-              //fontFamily: 'MyCustomFont',
+          title: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 45.0),
+              child: Text(
+                title,
+                style: const TextStyle(
+                  color:
+                      text_Color_white, // Usa el color que desees para el texto
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold, // Hace que el texto sea negrita
+                  //fontFamily: 'MyCustomFont',
+                ),
+              ),
             ),
           ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: body,
+        body: Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: body,
+        ),
       ),
     );
   }

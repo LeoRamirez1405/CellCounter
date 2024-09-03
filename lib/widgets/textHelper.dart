@@ -23,11 +23,11 @@ class TextHelper extends StatelessWidget {
         textAlign: TextAlign.center,
       ),
       SizedBox(
-        height: 6,
+        height: 20,
       ),
       body,
       SizedBox(
-        height: 10,
+        height: 15,
       )
     ]);
   }

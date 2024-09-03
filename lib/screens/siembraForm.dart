@@ -46,7 +46,8 @@ class _SiembraFormState extends State<SiembraForm> {
                       'samplesList': widget.samplesList,
                       'concentracion':
                           double.parse(_concentracionController.text),
-                      'vol': double.parse(_volController.text),
+                      'vol': double.parse(
+                          _volController.text.replaceAll(RegExp(r','), '.')),
                     },
                   );
                 }
@@ -68,7 +69,7 @@ class _SiembraFormState extends State<SiembraForm> {
       child: Column(children: [
         TextFormField(
             controller: _concentracionController,
-            keyboardType: TextInputType.datetime,
+            keyboardType: TextInputType.number,
             autocorrect: false,
             decoration: Input_Decorations(
                 '',
@@ -81,10 +82,13 @@ class _SiembraFormState extends State<SiembraForm> {
             }),
         TextFormField(
           controller: _volController,
+          keyboardType: TextInputType.number,
           decoration: Input_Decorations(
-              '', 'Volumen de siembra', const Icon(Icons.balance_rounded)),
+              '', 'Volumen de siembra (mL)', const Icon(Icons.balance_rounded)),
           validator: (value) {
-            return (value != null && value != "" && double.parse(value) > 0)
+            return (value != null &&
+                    value != "" &&
+                    double.parse(value.replaceAll(RegExp(r','), '.')) > 0)
                 ? null
                 : "Valor inválido";
           },

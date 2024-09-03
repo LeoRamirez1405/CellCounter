@@ -14,11 +14,11 @@ class About extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             const TextHelper(
                 header: 'Desarrolladores',
                 body: Text(
-                  """Leonardo Javier Ramirez Calatayud\nJordi Hernandez Delgado\n""",
+                  """Leonardo Javier Ramirez Calatayud\nJordi Hernández Delgado\n""",
                   textAlign: TextAlign.center,
                 )),
             const TextHelper(

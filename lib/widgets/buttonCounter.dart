@@ -26,8 +26,8 @@ class _ButtonCounterState extends State<ButtonCounter> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return MaterialButton(
-      height: min(170, size.width * 0.4),
-      minWidth: min(170, size.width * 0.4),
+      height: min(230, size.width * 0.55),
+      minWidth: min(230, size.width * 0.55),
       color: Colors.white,
       onPressed: () {
         setState(() {

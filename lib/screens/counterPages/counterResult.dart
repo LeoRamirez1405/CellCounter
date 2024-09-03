@@ -20,61 +20,68 @@ class CounterResult extends StatelessWidget {
             width: double.infinity,
             height: 550,
             child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                columns: const [
-                  // DataColumn(label: Text('No.')),
-                  DataColumn(label: Text('Nombre')),
-                  DataColumn(
-                      label: Text(
-                    'Vivas',
-                    style: TextStyle(color: Colors.green),
-                  )),
-                  DataColumn(
-                      label: Text(
-                    'Muertas',
-                    style: TextStyle(color: Colors.red),
-                  )),
-                  DataColumn(label: Text('Total')),
-                  DataColumn(label: Text('Viabilidad')),
-                  DataColumn(label: Text('Volumen')),
-                  DataColumn(label: Text('Dilución')),
-                  // DataColumn(label: Text('Vivas')),
-                  // DataColumn(label: Text('Muertas')),
-                  DataColumn(label: Text('Células Totales Concentradas')),
-                  // DataColumn(label: Text('Concentración Homogenado')),
-                ],
-                rows: List<DataRow>.generate(
-                  samplesList.length,
-                  (index) {
-                    final sample = samplesList[index];
-                    return DataRow(
-                      cells: [
-                        DataCell(Center(child: Text(sample.name.toString()))),
+              scrollDirection: Axis.vertical,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                  columns: const [
+                    // DataColumn(label: Text('No.')),
+                    DataColumn(label: Text('Nombre')),
+                    DataColumn(
+                        label: Text(
+                      'Vivas',
+                      style: TextStyle(color: Colors.green),
+                    )),
+                    DataColumn(
+                        label: Text(
+                      'Muertas',
+                      style: TextStyle(color: Colors.red),
+                    )),
+                    DataColumn(label: Text('Total')),
+                    DataColumn(label: Text('Viabilidad')),
+                    DataColumn(label: Text('Volumen')),
+                    DataColumn(label: Text('Dilución')),
+                    // DataColumn(label: Text('Vivas')),
+                    // DataColumn(label: Text('Muertas')),
+                    DataColumn(label: Text('Concentración de Células')),
+                    DataColumn(
+                        label: Text('Total de células por concentración')),
+                  ],
+                  rows: List<DataRow>.generate(
+                    samplesList.length,
+                    (index) {
+                      final sample = samplesList[index];
+                      return DataRow(
+                        cells: [
+                          DataCell(Center(child: Text(sample.name.toString()))),
 
-                        // DataCell(Center(child: Text((index + 1).toString()))),
-                        DataCell(Center(
-                            child: Text(sample.vivas.toString(),
-                                style: TextStyle(color: Colors.green)))),
-                        DataCell(Center(
-                            child: Text(sample.muertas.toString(),
-                                style: TextStyle(color: Colors.red)))),
-                        DataCell(Center(child: Text(sample.total.toString()))),
-                        DataCell(
-                            Center(child: Text(sample.viabilidad.toString()))),
-                        DataCell(Center(child: Text(sample.volume.toString()))),
-                        DataCell(
-                            Center(child: Text(sample.dilution.toString()))),
-                        // DataCell(Center(child: Text(sample.vivas.toString()))),
-                        // DataCell(Center(child: Text(sample.muertas.toString()))),
-                        DataCell(Center(
-                            child: Text(
-                                sample.cellTotalesConcentradas.toString()))),
-                        // DataCell(Center(
-                        //     child: Text(sample.concentracionHomogenado.toString()))),
-                      ],
-                    );
-                  },
+                          // DataCell(Center(child: Text((index + 1).toString()))),
+                          DataCell(Center(
+                              child: Text(sample.vivas.toString(),
+                                  style: TextStyle(color: Colors.green)))),
+                          DataCell(Center(
+                              child: Text(sample.muertas.toString(),
+                                  style: TextStyle(color: Colors.red)))),
+                          DataCell(
+                              Center(child: Text(sample.total.toString()))),
+                          DataCell(Center(
+                              child: Text(sample.viabilidad.toString()))),
+                          DataCell(
+                              Center(child: Text(sample.volume.toString()))),
+                          DataCell(
+                              Center(child: Text(sample.dilution.toString()))),
+                          // DataCell(Center(child: Text(sample.vivas.toString()))),
+                          // DataCell(Center(child: Text(sample.muertas.toString()))),
+                          DataCell(Center(
+                              child: Text(_toScientificNotation(
+                                  sample.cellTotalesConcentradas)))),
+                          DataCell(Center(
+                              child: Text(_toScientificNotation(
+                                  sample.totalCellHomogenado)))),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -109,4 +116,8 @@ class CounterResult extends StatelessWidget {
       ),
     );
   }
+}
+
+String _toScientificNotation(double value) {
+  return value.toStringAsExponential(2);
 }

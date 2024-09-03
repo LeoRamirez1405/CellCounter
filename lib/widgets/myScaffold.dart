@@ -13,33 +13,47 @@ class MyScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const MyDrawer(),
-      appBar: AppBar(
-        backgroundColor:
-            primary_en, // Establece el color de fondo del AppBar en negro
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu), // Ícono del menú
-            color: Colors.white, // Establece el color del ícono a blanco
-            onPressed: () => Scaffold.of(context)
-                .openDrawer(), // Abre el drawer cuando se presiona el ícono
-          ),
-        ),
-
-        title: Center(
-          child: Text(
-            title,
-            style: const TextStyle(
-              color: text_Color_white, // Usa el color que desees para el texto
-              fontSize: 24,
-              fontWeight: FontWeight.w400, // Hace que el texto sea negrita
-              //fontFamily: 'MyCustomFont',
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacementNamed(context, 'home');
+        return true;
+      },
+      child: Scaffold(
+        drawer: const MyDrawer(),
+        appBar: AppBar(
+          backgroundColor: primary_en, // Establece el color de fondo del AppBar
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.menu), // Ícono del menú
+              color: Colors.white, // Establece el color del ícono a blanco
+              onPressed: () => Scaffold.of(context)
+                  .openDrawer(), // Abre el drawer cuando se presiona el ícono
             ),
           ),
+          title: Stack(
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 40.0),
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    title,
+                    style: const TextStyle(
+                      color:
+                          text_Color_white, // Usa el color que desees para el texto
+                      fontSize: 24,
+                      fontWeight:
+                          FontWeight.w400, // Hace que el texto sea negrita
+                      //fontFamily: 'MyCustomFont',
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
+        body: body,
       ),
-      body: body,
     );
   }
 }

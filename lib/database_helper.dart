@@ -44,30 +44,59 @@ CREATE TABLE samples (
   }
 
   Future<void> insertSample(Sample sample) async {
-    final db = await instance.database;
+    try {
+      final db = await instance.database;
 
-    await db.insert(
-      'samples',
-      sample.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+      await db.insert(
+        'samples',
+        sample.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    } catch (e) {
+      print('Error inserting sample: $e');
+    }
   }
 
   Future<List<Sample>> fetchSamples() async {
-    final db = await instance.database;
+    try {
+      final db = await instance.database;
 
-    final result = await db.query('samples');
+      final result = await db.query('samples');
 
-    return result.map((json) => Sample.fromMap(json)).toList();
+      return result.map((json) => Sample.fromMap(json)).toList();
+    } catch (e) {
+      print('Error fetching samples: $e');
+      return [];
+    }
   }
 
   Future<void> deleteSample(int id) async {
+    try {
+      final db = await instance.database;
+
+      await db.delete(
+        'samples',
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    } catch (e) {
+      print('Error deleting sample: $e');
+    }
+  }
+
+  Future<void> deleteAllSamples() async {
+    try {
+      final db = await instance.database;
+
+      await db.delete('samples');
+    } catch (e) {
+      print('Error deleting all samples: $e');
+    }
+  }
+
+  Future<void> close() async {
     final db = await instance.database;
 
-    await db.delete(
-      'samples',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    db.close();
   }
 }

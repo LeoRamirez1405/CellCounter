@@ -40,7 +40,7 @@ class GenericButtonOnPress extends StatelessWidget {
           Icon(iconData, color: textColor), // Muestra el ícono proporcionado
           const SizedBox(width: 8), // Espacio entre el ícono y el texto
           Container(
-            width: 100, // Define un ancho fijo para el texto
+            // width: 100, // Define un ancho fijo para el texto
             child: Text(
               name,
               textAlign: TextAlign.center, // Alinea el texto al centro

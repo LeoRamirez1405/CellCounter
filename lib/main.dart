@@ -16,13 +16,18 @@ import 'package:cell_counter/screens/theoryScreens/procedures.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:io' show Platform;
 
 void main() {
   // Initialize FFI
-  sqfliteFfiInit();
-
+  if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+    // Initialize FFI for desktop platforms
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
   // Set the database factory
-  databaseFactory = databaseFactoryFfi;
+  // databaseFactory = databaseFactoryFfi;
 
   runApp(const MyApp());
 }

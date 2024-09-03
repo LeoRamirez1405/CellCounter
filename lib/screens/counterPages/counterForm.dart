@@ -1,3 +1,4 @@
+import 'package:cell_counter/colors.dart';
 import 'package:cell_counter/widgets/genericButtonOnPress.dart';
 import 'package:flutter/material.dart';
 import 'package:cell_counter/widgets/genericButton.dart';
@@ -26,15 +27,13 @@ class _CounterFormState extends State<CounterForm> {
   Widget build(BuildContext context) {
     return MyScaffold(
       title: "Información sobre el conteo",
-      body: Center(
-        child: Container(
-          //width: 350,
-          padding: const EdgeInsets.all(40),
-
+      body: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: SingleChildScrollView(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             form(_formKey),
             const SizedBox(
-              height: 20,
+              height: 60,
             ),
             GenericButtonOnPress(
               onPress: () {
@@ -46,8 +45,9 @@ class _CounterFormState extends State<CounterForm> {
                       'date': _dateController.text,
                       'name': _nameController.text,
                       'samples': int.parse(_samplesController.text),
-                      'volume': double.parse(_volumeController.text),
-                      'dilution': 1 / double.parse(_dilutionController.text),
+                      'volume': double.parse(
+                          _volumeController.text.replaceAll(RegExp(r','), '.')),
+                      'dilution': double.parse(_dilutionController.text),
                       'quadrants': int.parse(_quadrantsController.text),
                     },
                   );
@@ -69,12 +69,46 @@ class _CounterFormState extends State<CounterForm> {
       key: formKey,
       // autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(children: [
-        TextFormField(
-          controller: _dateController,
-          keyboardType: TextInputType.datetime,
-          autocorrect: false,
-          decoration: Input_Decorations(
-              'dia-mes-año', 'Fecha', const Icon(Icons.date_range)),
+        GestureDetector(
+          onTap: () async {
+            DateTime? pickedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2101),
+                builder: (BuildContext context, Widget? child) {
+                  return Theme(
+                    data: ThemeData.light().copyWith(
+                      primaryColor: primary_en, // Color de la barra superior
+                      // accentColor: Colors.blue, // Color de los botones de acción
+                      colorScheme: ColorScheme.light(
+                          primary:
+                              primary_en), // Color de los días seleccionados
+                      buttonTheme: ButtonThemeData(
+                        textTheme: ButtonTextTheme
+                            .primary, // Color del texto de los botones
+                      ),
+                    ),
+                    child: child!,
+                  );
+                });
+
+            if (pickedDate != null) {
+              setState(() {
+                _dateController.text =
+                    "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
+              });
+            }
+          },
+          child: AbsorbPointer(
+            child: TextFormField(
+              controller: _dateController,
+              keyboardType: TextInputType.datetime,
+              autocorrect: false,
+              decoration: Input_Decorations(
+                  'dia-mes-año', 'Fecha', const Icon(Icons.date_range)),
+            ),
+          ),
         ),
         TextFormField(
           controller: _nameController,
@@ -101,10 +135,12 @@ class _CounterFormState extends State<CounterForm> {
           controller: _volumeController,
           keyboardType: TextInputType.number,
           autocorrect: false,
-          decoration: Input_Decorations('', 'Volumen en ml (homogenado)',
+          decoration: Input_Decorations('', 'Volumen en mL (homogenado)',
               const Icon(Icons.numbers_rounded)),
           validator: (value) {
-            return (value != null && value != "" && int.parse(value) > 0)
+            return (value != null &&
+                    value != "" &&
+                    double.parse(value.replaceAll(RegExp(r','), '.')) > 0)
                 ? null
                 : "Valor Inválido";
           },

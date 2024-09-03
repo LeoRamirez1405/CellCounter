@@ -20,11 +20,12 @@ class Sample {
   });
 
   int get total => muertas + vivas;
-  double get viabilidad => (vivas / total) * 100;
-  double get cellTotalesConcentradas => (vivas / quadrants) * dilution * 10000;
+  double get viabilidad => _roundToTwoDecimals((vivas / total) * 100);
+  double get cellTotalesConcentradas =>
+      _roundToTwoDecimals((vivas / quadrants) * dilution * 10000);
   double get totalCellHomogenado => cellTotalesConcentradas * volume;
   double get volAtomar =>
-      (_concentracionSiembra * _volumenSiembra) / cellTotalesConcentradas;
+      (concentracionSiembra * volumenSiembra) / cellTotalesConcentradas;
 
   double _concentracionSiembra = 0.0;
   double _volumenSiembra = 0.0;
@@ -37,6 +38,14 @@ class Sample {
   double get volumenSiembra => _volumenSiembra;
   set volumenSiembra(double value) {
     _volumenSiembra = value;
+  }
+
+  double _roundToTwoDecimals(double value) {
+    return double.parse(value.toStringAsFixed(2));
+  }
+
+  String _toScientificNotation(double value) {
+    return value.toStringAsExponential(2);
   }
 
   Map<String, dynamic> toMap() {

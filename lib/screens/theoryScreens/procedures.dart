@@ -105,7 +105,7 @@ class Procedures extends StatelessWidget {
                     """5.	Comience a contar las células en el primer cuadrante. Los laboratorios tienen diferentes protocolos para contar células, pero una regla muy popular es:
         Las células que tocan los límites superior e izquierdo se cuentan, pero las que tocan los límites inferior y derecho no serán contadas.
         """,
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.justify,
                   ),
                   Image.asset("assets/proced3.png"),
                   const Text(

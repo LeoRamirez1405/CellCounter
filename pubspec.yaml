@@ -31,10 +31,11 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_tex: ^4.0.7 # Reemplaza 'latest_version' con la última versión disponible
-  sqflite: ^2.0.0+1
-  sqflite_common_ffi: ^2.0.0+1
+  sqflite: ^2.3.3+1
+  # data_table_2: ^2.5.15
+  sqflite_common_ffi: ^2.3.3 
   path: ^1.8.0
-  uuid: ^3.0.4
+  uuid: ^4.4.2
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
@@ -85,6 +86,7 @@ flutter:
     - assets/logo.png
     - assets/logo_empty.png
     - assets/fonts/OpenSans.ttf
+    - assets/icon/icon.png
   fonts:
     - family: OpenSans
       fonts:
